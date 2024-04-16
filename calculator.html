@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculator</title>
+    <link rel="stylesheet" href="calculator.css">
+</head>
+<body>
+    <div id="calculator">
+
+        <div>
+            <input type="text" id="display-screen" disabled>
+        </div>
+
+        <div class="three-btn-container">
+            <button id="ac-btn" onclick="clearScreen()">AC</button>
+            <button class="btn" onclick="entry('%')">%</button>
+            <button class="btn" onclick="entry('/')">/</button>
+        </div>
+
+        <div class="four-btn-container">
+            <button class="btn" onclick="entry('7')">7</button>
+            <button class="btn" onclick="entry('8')">8</button>
+            <button class="btn" onclick="entry('9')">9</button>
+            <button class="btn" onclick="entry('*')">*</button>
+        </div>    
+        <div class="four-btn-container">
+            <button class="btn" onclick="entry('4')">4</button>
+            <button class="btn" onclick="entry('5')">5</button>
+            <button class="btn" onclick="entry('6')">6</button>
+            <button class="btn" onclick="entry('-')">-</button>
+        </div>    
+        <div class="four-btn-container">
+            <button class="btn" onclick="entry('1')">1</button>
+            <button class="btn" onclick="entry('2')">2</button>
+            <button class="btn" onclick="entry('3')">3</button>
+            <button class="btn" onclick="entry('+')">+</button>
+        </div>    
+            
+        <div class="three-btn-container">
+            <button id="zero-btn" onclick="entry('0')">0</button>
+            <button class="btn" onclick="entry('.')">.</button>
+            <button id="equals-btn" onclick="evaluate_valueInput()">=</button>
+        </div>   
+    </div>
+  
+    <script src="calculator.js"></script>
+</body>
+</html>
