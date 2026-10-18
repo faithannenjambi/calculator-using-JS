@@ -6,9 +6,20 @@ const resultOutput = document.getElementById("result");
 const resetButton = document.getElementById("reset-btn");
 const exitButton = document.getElementById("exit-btn");
 
+const DEFAULT_MESSAGE = "Your answer will appear here.";
+
 calculatorForm.addEventListener("submit", calculate);
 resetButton.addEventListener("click", resetCalculator);
 exitButton.addEventListener("click", exitCalculator);
+
+// Return to the neutral state as soon as the user edits anything
+[firstNumberInput, secondNumberInput, operationInput].forEach((field) => {
+    field.addEventListener("input", () => {
+        if (resultOutput.classList.contains("error")) {
+            showMessage(DEFAULT_MESSAGE, "neutral");
+        }
+    });
+});
 
 function calculate(event) {
     event.preventDefault();
@@ -18,7 +29,7 @@ function calculate(event) {
     const operation = operationInput.value;
 
     if (firstNumberText === "" || secondNumberText === "") {
-        showMessage("Error: both number fields are required.", true);
+        showMessage("Error: both number fields are required.", "error");
         return;
     }
 
@@ -26,7 +37,7 @@ function calculate(event) {
     const secondNumber = Number(secondNumberText);
 
     if (!Number.isFinite(firstNumber) || !Number.isFinite(secondNumber)) {
-        showMessage("Error: enter valid real numbers.", true);
+        showMessage("Error: enter valid real numbers.", "error");
         return;
     }
 
@@ -47,7 +58,7 @@ function calculate(event) {
 
         case "/":
             if (secondNumber === 0) {
-                showMessage("Error: division by zero is not allowed.", true);
+                showMessage("Error: division by zero is not allowed.", "error");
                 return;
             }
 
@@ -55,16 +66,21 @@ function calculate(event) {
             break;
 
         default:
-            showMessage("Error: select a valid operation.", true);
+            showMessage("Error: select a valid operation.", "error");
             return;
     }
 
-    showMessage(`Result: ${result}`, false);
+    showMessage(formatResult(result), "success");
+}
+
+// Removes floating-point noise (e.g. 0.1 + 0.2 -> 0.3)
+function formatResult(value) {
+    return String(parseFloat(value.toPrecision(12)));
 }
 
 function resetCalculator() {
     calculatorForm.reset();
-    showMessage("Enter two numbers and select an operation.", false);
+    showMessage(DEFAULT_MESSAGE, "neutral");
     firstNumberInput.focus();
 }
 
@@ -81,14 +97,18 @@ function exitCalculator() {
 
     showMessage(
         "Calculator session ended. You may now close this browser tab.",
-        false
+        "neutral"
     );
 
     window.close();
 }
 
-function showMessage(message, isError) {
+// type: "neutral" | "success" | "error"
+function showMessage(message, type) {
     resultOutput.textContent = message;
     resultOutput.classList.remove("error", "success");
-    resultOutput.classList.add(isError ? "error" : "success");
+
+    if (type === "error" || type === "success") {
+        resultOutput.classList.add(type);
+    }
 }
