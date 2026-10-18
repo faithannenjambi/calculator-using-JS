@@ -68,7 +68,7 @@ body {
 
 .calculator-container {
     width: 100%;
-    max-width: 440px;
+    max-width: 600px;
 }
 
 .calculator {
@@ -101,16 +101,42 @@ body {
     }
 }
 
-h1 {
+.calculator-header {
     text-align: center;
+    margin-bottom: 32px;
+    padding-bottom: 24px;
+    border-bottom: 1px solid var(--border);
+}
+
+h1 {
     color: var(--text-strong);
-    font-size: 1.75rem;
+    font-size: 1.85rem;
     font-weight: 700;
     letter-spacing: -0.02em;
-    margin-bottom: 28px;
+    margin-bottom: 8px;
+}
+
+.subtitle {
+    max-width: 38ch;
+    margin: 0 auto;
+    color: var(--text-muted);
+    font-size: 0.95rem;
 }
 
 /* ---------- Form ---------- */
+
+/* First number | Operation | Second number, side by side */
+.expression-grid {
+    display: grid;
+    grid-template-columns: 1fr 1.15fr 1fr;
+    gap: 16px;
+    align-items: end;
+}
+
+.expression-grid .form-group {
+    margin-bottom: 0;
+    min-width: 0;
+}
 
 .form-group {
     display: flex;
@@ -241,9 +267,15 @@ select {
     background-color: var(--secondary-hover);
 }
 
+.calculator-footer {
+    margin-top: 28px;
+    padding-top: 22px;
+    border-top: 1px solid var(--border);
+}
+
 .btn-exit {
     width: 100%;
-    margin-top: 14px;
+    margin-top: 0;
     color: var(--danger);
     background-color: transparent;
     border: 1.5px solid rgba(192, 57, 43, 0.35);
@@ -326,6 +358,13 @@ select {
 
     .button-group {
         flex-direction: column;
+    }
+}
+
+@media (max-width: 640px) {
+    .expression-grid {
+        grid-template-columns: 1fr;
+        gap: 18px;
     }
 }
 
